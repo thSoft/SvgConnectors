@@ -1,0 +1,26 @@
+{
+  "name": "SvgConnectors",
+  "description": "Declarative SVG connectors",
+  "main": "../target/scripts.js",
+  "license": "MIT",
+  "ignore": [
+    "../*",
+    "!../target/main"
+  ],
+  "authors": [
+    {
+      "name": "Dénes Harmath",
+      "email": "<harmathdenes@gmail.com>",
+      "homepage": "http://thsoft.hu"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/thSoft/SvgConnectors.git"
+  },
+  "dependencies": {
+  },
+  "typescript": {
+    "definition": "../target/scripts.d.ts"
+  }
+}

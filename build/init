@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cd ${0%/*}
+npm install
+node_modules/bower/bin/bower install
+node node_modules/tsd/build/cli.js reinstall --save
+./build

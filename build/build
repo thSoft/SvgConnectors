@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd ${0%/*}
+node_modules/grunt-cli/bin/grunt bower_concat typescript less dom_munger
