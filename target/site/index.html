@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SVG Connectors</title>
+  <script src="../../target/site/bower_components.js" type="text/javascript"></script><script src="../../target/main/scripts.js" type="text/javascript"></script><script src="../../target/site/scripts.js" type="text/javascript"></script><link rel="stylesheet" href="../../target/site/stylesheets.css" type="text/css"></head>
+  <body>
+    Drag the nodes around!
+    <div id="source" draggable="true">Source</div>
+    <div id="target" draggable="true">Target</div>
+    <svg>
+      <g data-source="source" data-target="target">
+        <line></line>
+        <text>Connector</text>
+      </g>
+    </svg>
+  </body>
+</html>

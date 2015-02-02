@@ -1,0 +1,30 @@
+body {
+  font-family: Helvetica;
+}
+div {
+  position: absolute;
+  padding: 4px;
+  background-color: lightBlue;
+  border: 1px solid;
+  border-radius: 4px;
+}
+#source {
+  left: 60%;
+  top: 60%;
+}
+#target {
+  left: 120%;
+  top: 120%;
+}
+svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1000;
+}
+line {
+  stroke: black;
+}
+text {
+  text-shadow: 0px 0px 1px blue;
+}
