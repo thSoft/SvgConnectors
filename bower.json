@@ -1,7 +1,7 @@
 {
   "name": "SvgConnectors",
   "description": "Declarative SVG connectors",
-  "main": "../target/scripts.js",
+  "main": "../target/main/scripts.js",
   "license": "MIT",
   "ignore": [
     "../*",
@@ -21,6 +21,6 @@
   "dependencies": {
   },
   "typescript": {
-    "definition": "../target/scripts.d.ts"
+    "definition": "../target/main/scripts.d.ts"
   }
 }
