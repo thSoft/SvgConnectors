@@ -4,8 +4,8 @@
   "main": "target/main/scripts.js",
   "license": "MIT",
   "ignore": [
-    "*",
-    "!target/main"
+    "/*",
+    "!/target/main"
   ],
   "authors": [
     {
