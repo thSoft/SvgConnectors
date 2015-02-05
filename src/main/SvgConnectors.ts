@@ -28,16 +28,18 @@ module SvgConnectors {
   function refresh(connectorNode: Node, source: Element, target: Element) {
     if (connectorNode instanceof SVGElement) {
       var connector = <SVGElement>connectorNode;
-      var sourceRect = source.getBoundingClientRect();
-      var targetRect = target.getBoundingClientRect();
-      var sourceCenter = toPage(MiscUtils.getCenter(sourceRect));
-      var targetCenter = toPage(MiscUtils.getCenter(targetRect));
+      var sourceRect = toPage(source.getBoundingClientRect());
+      var targetRect = toPage(target.getBoundingClientRect());
+      var sourceCenter = MiscUtils.getCenter(sourceRect);
+      var targetCenter = MiscUtils.getCenter(targetRect);
       switch (connector.tagName.toLowerCase()) {
         case "line":
-          connector.setAttribute("x1", sourceCenter.x.toString());
-          connector.setAttribute("y1", sourceCenter.y.toString());
-          connector.setAttribute("x2", targetCenter.x.toString());
-          connector.setAttribute("y2", targetCenter.y.toString());
+          var startPoint = MiscUtils.getIntersection(sourceCenter, targetCenter, sourceRect);
+          var endPoint = MiscUtils.getIntersection(targetCenter, sourceCenter, targetRect);
+          connector.setAttribute("x1", startPoint.x.toString());
+          connector.setAttribute("y1", startPoint.y.toString());
+          connector.setAttribute("x2", endPoint.x.toString());
+          connector.setAttribute("y2", endPoint.y.toString());
           break;
         case "text":
           connector.setAttribute("text-anchor", "middle");
@@ -61,10 +63,14 @@ module SvgConnectors {
     }
   }
 
-  function toPage(point: MiscUtils.Point): MiscUtils.Point {
+  function toPage(rectangle: ClientRect): ClientRect {
     return {
-      x: point.x + window.pageXOffset,
-      y: point.y + window.pageYOffset
+      left: rectangle.left + window.pageXOffset,
+      top: rectangle.top + window.pageYOffset,
+      right: rectangle.right + window.pageXOffset,
+      bottom: rectangle.bottom + window.pageYOffset,
+      width: rectangle.width,
+      height: rectangle.height
     };
   }
 

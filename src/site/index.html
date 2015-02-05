@@ -9,8 +9,16 @@
     <div id="source" draggable="true">Source</div>
     <div id="target" draggable="true">Target</div>
     <svg>
+      <defs>
+        <marker id="markerCircle" markerWidth="8" markerHeight="8" refx="5" refy="5">
+          <circle cx="5" cy="5" r="2.5"/>
+        </marker>
+        <marker id="markerArrow" markerWidth="13" markerHeight="13" refx="8.5" refy="6" orient="auto">
+          <path d="M2,2 L2,11 L10,6 L2,2"/>
+        </marker>
+      </defs>
       <g data-source="source" data-target="target">
-        <line/>
+        <line marker-start="url(#markerCircle)" marker-end="url(#markerArrow)"/>
         <text>Connector</text>
       </g>
     </svg>

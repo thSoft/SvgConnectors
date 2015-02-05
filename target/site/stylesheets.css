@@ -1,7 +1,7 @@
 body {
   font-family: Helvetica;
 }
-div {
+[draggable=true] {
   position: absolute;
   padding: 4px;
   background-color: lightBlue;
@@ -20,7 +20,7 @@ svg {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: -1000;
+  pointer-events: none;
 }
 line {
   stroke: black;

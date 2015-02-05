@@ -15,6 +15,52 @@ var MiscUtils;
         return Math.min(a, b) + Math.abs(a - b) / 2;
     }
     MiscUtils.getMedian = getMedian;
+    function getIntersection(inner, outer, rectangle) {
+        var height = outer.y - inner.y;
+        var width = outer.x - inner.x;
+        if (inner.x < outer.x) {
+            var distanceFromRight = rectangle.right - inner.x;
+            var rightY = inner.y + height * distanceFromRight / width;
+            if ((rectangle.top <= rightY) && (rightY <= rectangle.bottom)) {
+                return {
+                    x: rectangle.right,
+                    y: rightY
+                };
+            }
+        }
+        if (outer.x < inner.x) {
+            var distanceFromLeft = inner.x - rectangle.left;
+            var leftY = inner.y - height * distanceFromLeft / width;
+            if ((rectangle.top <= leftY) && (leftY <= rectangle.bottom)) {
+                return {
+                    x: rectangle.left,
+                    y: leftY
+                };
+            }
+        }
+        if (inner.y < outer.y) {
+            var distanceFromBottom = rectangle.bottom - inner.y;
+            var bottomX = inner.x + width * distanceFromBottom / height;
+            if ((rectangle.left <= bottomX) && (bottomX <= rectangle.right)) {
+                return {
+                    x: bottomX,
+                    y: rectangle.bottom
+                };
+            }
+        }
+        if (outer.y < inner.y) {
+            var distanceFromTop = inner.y - rectangle.top;
+            var topX = inner.x - width * distanceFromTop / height;
+            if ((rectangle.left <= topX) && (topX <= rectangle.right)) {
+                return {
+                    x: topX,
+                    y: rectangle.top
+                };
+            }
+        }
+        return null;
+    }
+    MiscUtils.getIntersection = getIntersection;
 })(MiscUtils || (MiscUtils = {}));
 ///<reference path="MiscUtils.ts"/>
 var DraggableElements;
@@ -62,16 +108,18 @@ var SvgConnectors;
     function refresh(connectorNode, source, target) {
         if (connectorNode instanceof SVGElement) {
             var connector = connectorNode;
-            var sourceRect = source.getBoundingClientRect();
-            var targetRect = target.getBoundingClientRect();
-            var sourceCenter = toPage(MiscUtils.getCenter(sourceRect));
-            var targetCenter = toPage(MiscUtils.getCenter(targetRect));
+            var sourceRect = toPage(source.getBoundingClientRect());
+            var targetRect = toPage(target.getBoundingClientRect());
+            var sourceCenter = MiscUtils.getCenter(sourceRect);
+            var targetCenter = MiscUtils.getCenter(targetRect);
             switch (connector.tagName.toLowerCase()) {
                 case "line":
-                    connector.setAttribute("x1", sourceCenter.x.toString());
-                    connector.setAttribute("y1", sourceCenter.y.toString());
-                    connector.setAttribute("x2", targetCenter.x.toString());
-                    connector.setAttribute("y2", targetCenter.y.toString());
+                    var startPoint = MiscUtils.getIntersection(sourceCenter, targetCenter, sourceRect);
+                    var endPoint = MiscUtils.getIntersection(targetCenter, sourceCenter, targetRect);
+                    connector.setAttribute("x1", startPoint.x.toString());
+                    connector.setAttribute("y1", startPoint.y.toString());
+                    connector.setAttribute("x2", endPoint.x.toString());
+                    connector.setAttribute("y2", endPoint.y.toString());
                     break;
                 case "text":
                     connector.setAttribute("text-anchor", "middle");
@@ -94,10 +142,14 @@ var SvgConnectors;
             }
         }
     }
-    function toPage(point) {
+    function toPage(rectangle) {
         return {
-            x: point.x + window.pageXOffset,
-            y: point.y + window.pageYOffset
+            left: rectangle.left + window.pageXOffset,
+            top: rectangle.top + window.pageYOffset,
+            right: rectangle.right + window.pageXOffset,
+            bottom: rectangle.bottom + window.pageYOffset,
+            width: rectangle.width,
+            height: rectangle.height
         };
     }
     function observe(observed, connectorNode, source, target) {
