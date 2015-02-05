@@ -112,10 +112,10 @@ var SvgConnectors;
             var targetRect = toPage(target.getBoundingClientRect());
             var sourceCenter = MiscUtils.getCenter(sourceRect);
             var targetCenter = MiscUtils.getCenter(targetRect);
+            var startPoint = MiscUtils.getIntersection(sourceCenter, targetCenter, sourceRect);
+            var endPoint = MiscUtils.getIntersection(targetCenter, sourceCenter, targetRect);
             switch (connector.tagName.toLowerCase()) {
                 case "line":
-                    var startPoint = MiscUtils.getIntersection(sourceCenter, targetCenter, sourceRect);
-                    var endPoint = MiscUtils.getIntersection(targetCenter, sourceCenter, targetRect);
                     connector.setAttribute("x1", startPoint.x.toString());
                     connector.setAttribute("y1", startPoint.y.toString());
                     connector.setAttribute("x2", endPoint.x.toString());
@@ -123,9 +123,9 @@ var SvgConnectors;
                     break;
                 case "text":
                     connector.setAttribute("text-anchor", "middle");
-                    var x = MiscUtils.getMedian(sourceCenter.x, targetCenter.x);
+                    var x = MiscUtils.getMedian(startPoint.x, endPoint.x);
                     connector.setAttribute("x", x.toString());
-                    var y = MiscUtils.getMedian(sourceCenter.y, targetCenter.y);
+                    var y = MiscUtils.getMedian(startPoint.y, endPoint.y);
                     connector.setAttribute("y", y.toString());
                     break;
                 case "g":
@@ -135,9 +135,9 @@ var SvgConnectors;
             }
             var containerSvg = connector.ownerSVGElement;
             if (containerSvg != null) {
-                var scrollWidth = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth); // XXX
+                var scrollWidth = Math.max(document.documentElement.scrollWidth, document.body.scrollWidth); // XXX cross-browser behavior
                 containerSvg.setAttribute("width", scrollWidth.toString());
-                var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight); // XXX
+                var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight); // XXX cross-browser behavior
                 containerSvg.setAttribute("height", scrollHeight.toString());
             }
         }
