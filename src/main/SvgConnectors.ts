@@ -5,6 +5,7 @@ module SvgConnectors {
   export function manage() {
     refreshAll();
     document.addEventListener("DOMSubtreeModified", refreshAll);
+    window.addEventListener("resize", refreshAll);
   }
 
   function refreshAll() {

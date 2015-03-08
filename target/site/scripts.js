@@ -68,6 +68,7 @@ var SvgConnectors;
     function manage() {
         refreshAll();
         document.addEventListener("DOMSubtreeModified", refreshAll);
+        window.addEventListener("resize", refreshAll);
     }
     SvgConnectors.manage = manage;
     function refreshAll() {
