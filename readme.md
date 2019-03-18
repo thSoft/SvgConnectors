@@ -1,3 +1,13 @@
+# SVG Connectors
+
+Create connector elements in SVG which connect two DOM elements together!
+
+![](docs/sample.png "Sample")
+
+## Usage
+
+See `src/site`
+
 ## Build
 
 1. [Install node](http://nodejs.org/download/)
@@ -8,7 +18,3 @@ cd SvgConnectors/build
 ./init
 ./view
 ```
-
-## Use
-
-See `src/site`
